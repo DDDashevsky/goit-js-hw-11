@@ -17,4 +17,15 @@ export default class FetchApi {
 
     return response.data.hits;
   }
+
+  incrementPage() {
+    this.page += 1;
+  }
+  resetPage() {
+    this.page = 1;
+  }
+
+  resetSearchQuery() {
+    this.searchQuery = '';
+  }
 }
