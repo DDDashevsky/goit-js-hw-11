@@ -15,7 +15,7 @@ export default class FetchApi {
       }&per_page=40`
     );
 
-    return response.data.hits;
+    return response;
   }
 
   incrementPage() {
