@@ -16,6 +16,7 @@ const refs = {
   gallery: document.querySelector('.gallery'),
   load: document.querySelector('.load-more'),
 };
+
 refs.load.setAttribute('disabled', 'true');
 
 refs.form.addEventListener('submit', e => {
@@ -59,7 +60,7 @@ async function searchImgs() {
         notification.totalHits(res.data.totalHits);
       }
     })
-    .catch(err => console.log('smthtns wrong :('));
+    .catch(err => console.log(err));
 }
 
 refs.load.addEventListener('click', async () => {
