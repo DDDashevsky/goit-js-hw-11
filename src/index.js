@@ -5,9 +5,11 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import FetchApi from './fetchAPI';
 import makeMarkup from './markup';
 import Notification from './messages';
+import LightboxApi from './lightbox';
 
 const fetchAPI = new FetchApi();
 const notification = new Notification();
+const lightboxApi = new LightboxApi();
 
 const refs = {
   form: document.querySelector('.search-form'),
@@ -43,6 +45,7 @@ async function searchImgs() {
         toggleBtn('en');
         refs.gallery.innerHTML = ' ';
         refs.gallery.insertAdjacentHTML('beforeend', makeMarkup(res.data.hits));
+        lightboxApi.createGallery();
         notification.totalHits(res.data.totalHits);
       }
     })
@@ -56,6 +59,7 @@ refs.load.addEventListener('click', async () => {
     .fetchImage()
     .then(res => {
       refs.gallery.insertAdjacentHTML('beforeend', makeMarkup(res.data.hits));
+      lightboxApi.resetGallery();
       if (res.data.totalHits <= fetchAPI.page * 40) {
         notification.theEnd();
         toggleBtn('dis');
