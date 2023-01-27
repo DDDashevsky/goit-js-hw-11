@@ -21,11 +21,22 @@ refs.load.setAttribute('disabled', 'true');
 refs.form.addEventListener('submit', e => {
   e.preventDefault();
 
-  if (refs.form.elements[0].value.trim() === '') {
+  if (
+    refs.form.elements[0].value.trim() === '' &&
+    fetchAPI.searchQuery === ''
+  ) {
     notification.emptyInput();
     return;
   }
-
+  if (fetchAPI.searchQuery === refs.form.elements[0].value.trim()) {
+    return;
+  }
+  if (fetchAPI.searchQuery && !refs.form.elements[0].value.trim()) {
+    refs.gallery.innerHTML = '';
+    fetchAPI.resetSearchQuery();
+    toggleBtn('dis');
+    return;
+  }
   fetchAPI.resetPage();
   searchImgs();
 });
@@ -36,7 +47,6 @@ async function searchImgs() {
   await fetchAPI
     .fetchImage()
     .then(res => {
-      console.log(res);
       if (res.data.totalHits === 0) {
         notification.noRes();
         fetchAPI.resetSearchQuery;
