@@ -38,6 +38,7 @@ refs.form.addEventListener('submit', e => {
     toggleBtn('dis');
     return;
   }
+
   fetchAPI.resetPage();
   searchImgs();
 });
@@ -58,6 +59,11 @@ async function searchImgs() {
         refs.gallery.insertAdjacentHTML('beforeend', makeMarkup(res.data.hits));
         lightboxApi.createGallery();
         notification.totalHits(res.data.totalHits);
+        if (res.data.totalHits <= 40) {
+          toggleBtn('dis');
+          notification.theEnd();
+          return;
+        }
       }
     })
     .catch(err => console.log(err));
